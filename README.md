@@ -155,8 +155,64 @@ Finally, we can go to Github and create what is called a pull request. A pull re
 We all know how to fork a project, create branches, commit changes, push them to repositories, and make pull requests. What we're going to do now is all contribute as a group to a single website. I have a Github pages site hosted at (https://zach-wild.github.io/git-workshop/index.html) with the files from this project. The goal is for everyone to add their own changes to the site in their own copies of the repository, push them to their fork on github, and make pull requests to the original Github repository from their forks. 
 The first step for us is to get our local repository in the same state as the origin repository.
 ```sh
+# add a remote reference to the original repository
+$ git remote add source git@github.com:zach-wild/git-workshop.git
+# make sure we are in the master branch
 $ git checkout master
-$ git log # well find the commit with the hash d6bceea09
+# find the most recent commit from the remote repository
+$ git log
+# reset the master branch to point to this commit
 $ git reset --hard d6bceea09
+# push the new master branch with this commit at the head to our fork
 $ git push origin master --force
+# if any changes are made to the remote repository we can pull them
+$ git pull source master
+# remove our develop branch
+$ git branch -D develop
+# create a new develop branch
+$ git checkout -b develop master
+$ git push origin develop
+# create your feature branch
+$ git checkout -b feature-<your-name> develop
+# make changes in your branch
+# ...
+# push changes to your fork
+$ git add .
+$ git commit -m 'Finish feature <your-name>'
+$ git push origin feature-<your-name>
+# make pull request on github
 ```
+So I ask that you make your changes to the website in the form of creating a new web page. This is in order to avoid merge conflicts. I'll go through an example of what I mean.
+```html
+  <div id="navbar">
+    <a href="">Home</a>
+    <a href="./jokes.html">Jokes</a>
+    // you should add a link to your page in the index.html like this
+    <a href="./zach.html">zach</a>
+  </div>
+```
+You should also create a new html file for yourself based on the jokes page. Change whatever you want and make this page your own. You can add your own css files or whatever you'd like to do.
+```html
+<html>
+
+<head>
+  <title>Zach's Page</title>
+  <link rel="stylesheet" type="text/css" href="./style.css">
+</head>
+
+<body>
+  <div id="title">
+    Github Workshop Jokes
+  </div>
+
+  <div id="navbar">
+      <a href="./index.html">Home</a>
+      <a href="">Jokes</a>
+  </div>
+
+  <h1>This is zach's page</h1>
+</body>
+
+</html>
+```
+Once you've done this make a pull request and I'll accept them as they come in. You'll be able to see the changes reflected at (https://zach-wild.github.io/git-workshop/index.html).
